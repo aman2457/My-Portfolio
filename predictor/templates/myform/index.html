@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Home page</title>
+  </head>
+  <body>
+    <h1>Titanic survival prediction</h1>
+    <form action= "{% url "result" %}">
+      {% csrf_token %}
+      {{form | linebreaks}}
+
+      <p>Location: </p>
+      <input type="text" name="location">
+      <br>
+
+      <p>sqft : </p>
+      <input type="text" name="sqft">
+      <br>
+
+      <p>Bath : </p>
+      <input type="text" name="bath">
+      <br>
+
+      <p>Bhk: </p>
+      <input type="text" name="bhk">
+      <br>
+
+      <input type="submit" value='Get Predictions'>
+    </form>
+  </body>
+</html>

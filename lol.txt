@@ -1,0 +1,49 @@
+import pickle
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import render
+import numpy as np
+
+# Create your views here.
+@api_view(['GET'])
+def index_page(request):
+    return_data = {
+        "error" : "0",
+        "message" : "Successful",
+    }
+    return Response(return_data)
+
+@api_view(["POST"])
+def predict_price(request):
+    try:
+        location = request.data.get('loacation',None)
+        bhk = request.data.get('bhk',None)
+        bath = request.data.get('bath',None)
+        sqft = request.data.get('sqft',None)
+        fields = [location,bhk,bath,sqft]
+        if not None in fields:
+            #Datapreprocessing Convert the values to float
+            result = [location,bhk,bath,sqft]
+            #Passing data to model & loading the model from disks
+            model_path = 'predictor/model/banglore_home_prices_model.pickle'
+            predictor_linreg = pickle.load(open(model_path, 'rb'))
+            prediction = predictor_linreg.predict([result])[0]
+            conf_score =  np.max(predictor_linreg.predict_proba([result]))*100
+            predictions = {
+                'error' : '0',
+                'message' : 'Successfull',
+                'prediction' : prediction,
+                'confidence_score' : conf_score
+            }
+        else:
+            predictions = {
+                'error' : '1',
+                'message': 'Invalid Parameters'                
+            }
+    except Exception as e:
+        predictions = {
+            'error' : '2',
+            "message": str(e)
+        }
+    
+    return Response(predictions)
