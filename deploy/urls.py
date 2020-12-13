@@ -18,6 +18,15 @@ from django.urls import path,include
 from predictor import views
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
+    path('', views.index, name='home'),
+    path('convert/',views.base , name='base'),
+    path('predictor/',views.predictor , name='predictor'),
+    path('infix-postfix-convert/',views.iConverter , name='infix'),
+    path('projects/',views.project, name='project'),
+    path('palindrome-checker/',views.palindrome , name='palindrome'),
+    path('tower-of-hanoi/',views.tower , name='tower'),
+
+
 ]

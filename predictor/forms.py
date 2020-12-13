@@ -28,3 +28,19 @@ class predictForm(forms.Form):
     bath = forms.ChoiceField(choices=BHK_choice)
     
     bhk = forms.ChoiceField(choices=Bath_choice)
+
+
+
+class convertForm(forms.Form):
+        value = forms.IntegerField()
+        base = forms.IntegerField()
+
+class iConvertForm(forms.Form):
+        expression = forms.CharField()
+
+class tohForm(forms.Form):
+    
+        no_of_disk = forms.CharField()
+        from_disk = forms.CharField()
+        to_disk = forms.CharField()
+        with_disk = forms.CharField()
